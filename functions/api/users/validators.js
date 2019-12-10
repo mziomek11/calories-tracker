@@ -1,6 +1,6 @@
 const { body } = require("express-validator");
 
-const validateCreateUser = () => [
+const validateCreate = () => [
   body("email")
     .isLength({ min: 1 })
     .withMessage("Email is required")
@@ -28,6 +28,6 @@ const validateLogin = () => [
 ];
 
 module.exports = {
-  validateCreateUser,
+  validateCreate,
   validateLogin
 };

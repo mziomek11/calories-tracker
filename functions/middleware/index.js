@@ -1,3 +1,5 @@
 module.exports = {
-  validationErrors: require("./validationErrors")
+  validationErrors: require("./validationErrors"),
+  auth: require("./auth"),
+  createDocExistsAndIsOwner: require("./createDocExistsAndIsOwner")
 };

@@ -1,9 +1,9 @@
-const { handleServerError } = require("../../utils/handleServerError");
+const { handleServerError, isAuthError } = require("../../utils");
 const { wrongCredentialsError, emailInUseError } = require("../../errors");
-const { firebase } = require("../../utils/firebase");
+const { firebase } = require("../../firebase");
 const { auth } = firebase;
 
-const createUser = async (req, res) => {
+const create = async (req, res) => {
   try {
     const { email, password } = req.body;
     const data = await auth().createUserWithEmailAndPassword(email, password);
@@ -18,14 +18,14 @@ const createUser = async (req, res) => {
   }
 };
 
-const loginUser = async (req, res) => {
+const login = async (req, res) => {
   try {
     const { email, password } = req.body;
     const data = await auth().signInWithEmailAndPassword(email, password);
     const token = await data.user.getIdToken();
     return res.status(200).json({ token });
   } catch (err) {
-    if (err.code.slice(0, 5) === "auth/") {
+    if (isAuthError(err)) {
       return res.status(403).json({ errors: [wrongCredentialsError] });
     }
 
@@ -34,6 +34,6 @@ const loginUser = async (req, res) => {
 };
 
 module.exports = {
-  createUser,
-  loginUser
+  create,
+  login
 };
