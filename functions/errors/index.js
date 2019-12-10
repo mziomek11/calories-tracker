@@ -3,5 +3,6 @@ module.exports = {
   emailInUseError: require("./emailInUse"),
   wrongCredentialsError: require("./wrongCredentials"),
   invalidTokenError: require("./invalidToken"),
-  categoryExistsError: require("./categoryExists")
+  categoryExistsError: require("./categoryExists"),
+  foodExistsError: require("./foodExists")
 };

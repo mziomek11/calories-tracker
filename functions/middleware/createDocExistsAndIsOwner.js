@@ -12,6 +12,7 @@ module.exports = category => async (req, res, next) => {
     }
 
     req.docPath = documentPath;
+    req.doc = document;
     next();
   } catch (err) {
     return handleServerError(res, err);

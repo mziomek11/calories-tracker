@@ -4,14 +4,14 @@ const { handleServerError } = require("../../utils");
 
 const collection = "categories";
 
-const getOwn = async (req, res) => {
+const getAllOwn = async (req, res) => {
   try {
-    const userDocs = await db
+    const userCategories = await db
       .collection(collection)
       .where("user", "==", req.user.user_id)
       .get();
 
-    const categories = userDocs.docs.map(doc => ({
+    const categories = userCategories.docs.map(doc => ({
       id: doc.id,
       name: doc.data().name
     }));
@@ -67,4 +67,4 @@ const update = async (req, res) => {
   }
 };
 
-module.exports = { create, getOwn, remove, update };
+module.exports = { create, getAllOwn, remove, update };
