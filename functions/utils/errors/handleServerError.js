@@ -1,4 +1,4 @@
-const { serverError } = require("../errors");
+const { serverError } = require("../../errors");
 
 module.exports = (res, err) => {
   console.log(err);

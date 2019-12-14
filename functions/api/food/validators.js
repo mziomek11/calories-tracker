@@ -1,9 +1,17 @@
 const { body } = require("express-validator");
 
+const { hasUserDocWithVal } = require("../../utils/db");
+
+const foodDoesNotExists = async (val, { req: { user } }) => {
+  const exists = await hasUserDocWithVal("food", user.user_id, "name", val);
+  if (exists) return Promise.reject("Food already exists");
+};
+
 const validateFood = () => [
   body("name")
     .isLength({ min: 1 })
-    .withMessage("Name is required"),
+    .withMessage("Name is required")
+    .custom(foodDoesNotExists),
   body("calories")
     .isLength({ min: 1 })
     .withMessage("Calories are required")

@@ -1,6 +1,10 @@
-const { handleServerError, isAuthError, handleAuthError } = require("../utils");
 const { admin } = require("../firebase");
 const { auth } = admin;
+const {
+  handleServerError,
+  isAuthError,
+  handleAuthError
+} = require("../utils/errors");
 
 module.exports = async (req, res, next) => {
   const { authorization } = req.headers;

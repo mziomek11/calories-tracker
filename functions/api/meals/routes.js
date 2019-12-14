@@ -1,16 +1,16 @@
 const { Router } = require("express");
 
-const { create, getAllOwn, remove, update } = require("./handlers");
+const { create, update } = require("./handlers");
+const { deleteDoc } = require("../../utils/db");
 const { validateCreate, validateUpdate } = require("./validators");
 const {
   validationErrors,
   createDocExistsAndIsOwner
 } = require("../../middleware");
-const docExistsAndIsOwner = createDocExistsAndIsOwner("categories");
+const docExistsAndIsOwner = createDocExistsAndIsOwner("meals");
 
 const router = Router();
 
-router.get("/", getAllOwn);
 router.post("/", validateCreate(), validationErrors, create);
 router.put(
   "/:id",
@@ -19,6 +19,6 @@ router.put(
   docExistsAndIsOwner,
   update
 );
-router.delete("/:id", docExistsAndIsOwner, remove);
+router.delete("/:id", docExistsAndIsOwner, deleteDoc);
 
 module.exports = router;

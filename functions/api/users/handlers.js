@@ -1,11 +1,10 @@
-const { handleServerError, isAuthError } = require("../../utils");
+const { handleServerError, isAuthError } = require("../../utils/errors");
 const { wrongCredentialsError, emailInUseError } = require("../../errors");
 const { firebase } = require("../../firebase");
 const { auth } = firebase;
 
-const create = async (req, res) => {
+const create = async ({ body: { email, password } }, res) => {
   try {
-    const { email, password } = req.body;
     const data = await auth().createUserWithEmailAndPassword(email, password);
     const token = await data.user.getIdToken();
     return res.status(201).json({ token });
@@ -18,9 +17,8 @@ const create = async (req, res) => {
   }
 };
 
-const login = async (req, res) => {
+const login = async ({ body: { email, password } }, res) => {
   try {
-    const { email, password } = req.body;
     const data = await auth().signInWithEmailAndPassword(email, password);
     const token = await data.user.getIdToken();
     return res.status(200).json({ token });

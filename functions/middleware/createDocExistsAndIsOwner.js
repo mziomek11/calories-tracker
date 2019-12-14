@@ -1,5 +1,5 @@
 const { db } = require("../firebase");
-const { handleServerError, handleAuthError } = require("../utils");
+const { handleServerError, handleAuthError } = require("../utils/errors");
 
 module.exports = category => async (req, res, next) => {
   try {
@@ -11,7 +11,6 @@ module.exports = category => async (req, res, next) => {
       return handleAuthError(res);
     }
 
-    req.docPath = documentPath;
     req.doc = document;
     next();
   } catch (err) {

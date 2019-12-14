@@ -1,6 +1,7 @@
 const { Router } = require("express");
 
-const { create, getAllOwn, getOne, remove, update } = require("./handlers");
+const { create, getAllOwn, getOne, update } = require("./handlers");
+const { deleteDoc } = require("../../utils/db");
 const { validateFood } = require("./validators");
 const {
   validationErrors,
@@ -20,6 +21,6 @@ router.put(
   docExistsAndIsOwner,
   update
 );
-router.delete("/:id", docExistsAndIsOwner, remove);
+router.delete("/:id", docExistsAndIsOwner, deleteDoc);
 
 module.exports = router;
