@@ -1,15 +1,21 @@
 import React from "react";
+import { BrowserRouter } from "react-router-dom";
 
 import CssBaseline from "@material-ui/core/CssBaseline";
-import Header from "./layout/header/Header";
+
+import { TokenProvider } from "./context/token";
+import Header from "./components/layout/header/Header";
+import PageRoutes from "./components/routing/PageRoutes";
 
 const App: React.FC = () => {
   return (
-    <>
+    <TokenProvider>
       <CssBaseline />
-      <Header />
-      <p>asdasd</p>
-    </>
+      <BrowserRouter>
+        <Header />
+        <PageRoutes />
+      </BrowserRouter>
+    </TokenProvider>
   );
 };
 

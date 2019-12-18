@@ -1,4 +1,4 @@
 module.exports = {
   msg: "Wrong credentials, please try again",
-  param: "login"
+  param: "general"
 };

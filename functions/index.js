@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require("cors");
 const functions = require("firebase-functions");
 
 const userRoutes = require("./api/users/routes");
@@ -9,6 +10,8 @@ const mealRoutes = require("./api/meals/routes");
 const { auth } = require("./middleware");
 
 const app = express();
+
+app.use(cors());
 
 app.use("/users", userRoutes);
 app.use("/food", auth, foodRoutes);
