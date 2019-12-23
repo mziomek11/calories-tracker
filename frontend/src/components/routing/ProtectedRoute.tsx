@@ -6,7 +6,7 @@ import { TokenContext } from "../../context/token";
 const ProtectedRoute: React.FC<RouteProps> = props => {
   const { token } = useContext(TokenContext);
 
-  return token ? <Route {...props} /> : <Redirect to="/login" />;
+  return token ? <Route exact {...props} /> : <Redirect to="/login" />;
 };
 
 export default ProtectedRoute;

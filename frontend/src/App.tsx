@@ -1,5 +1,7 @@
 import React from "react";
+import MomentUtils from "@date-io/moment";
 import { BrowserRouter } from "react-router-dom";
+import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 
 import CssBaseline from "@material-ui/core/CssBaseline";
 
@@ -9,13 +11,15 @@ import PageRoutes from "./components/routing/PageRoutes";
 
 const App: React.FC = () => {
   return (
-    <TokenProvider>
-      <CssBaseline />
-      <BrowserRouter>
-        <Header />
-        <PageRoutes />
-      </BrowserRouter>
-    </TokenProvider>
+    <MuiPickersUtilsProvider utils={MomentUtils}>
+      <TokenProvider>
+        <CssBaseline />
+        <BrowserRouter>
+          <Header />
+          <PageRoutes />
+        </BrowserRouter>
+      </TokenProvider>
+    </MuiPickersUtilsProvider>
   );
 };
 
