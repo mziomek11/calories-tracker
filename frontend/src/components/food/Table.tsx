@@ -1,7 +1,6 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useContext } from "react";
 
-import { authGet } from "../../utils/http";
-import { TokenContext } from "../../context/token";
+import { FoodContext, Food } from "../../context/food";
 import { tableIcons } from "../../utils/table";
 
 import DialogTable from "../table/dialog/Table";
@@ -9,60 +8,31 @@ import AddDialog from "./dialogs/Add";
 import UpdateDialog from "./dialogs/Update";
 import DeleteDialog from "./dialogs/Delete";
 
-export type Food = {
-  id: string;
-  name: string;
-  calories: number;
-  fat: number;
-  carbohydrates: number;
-  protein: number;
-};
-
 const Table = () => {
-  const [isLoading, setLoading] = useState<boolean>(true);
-  const [food, setFood] = useState<Food[]>([]);
-  const { token } = useContext(TokenContext);
+  const { food, isLoading, dispatch } = useContext(FoodContext);
 
-  useEffect(() => {
-    authGet("/food", token).then(res => {
-      setFood(res.data.food);
-      setLoading(false);
-    });
-  }, [token]);
+  const addFood = (newFood: Food) =>
+    dispatch({ type: "ADD", payload: newFood });
 
-  const handleAdd = (newFood: Food) => {
-    setFood(prevFood => [...prevFood, newFood]);
-  };
+  const updateFood = (updatedFood: Food) =>
+    dispatch({ type: "UPDATE", payload: updatedFood });
 
-  const handleUpdate = (updatedFood: Food) => {
-    setFood(prevFood => {
-      const newMeals = [...prevFood];
-      const targetIndex = newMeals.findIndex(
-        food => food.id === updatedFood.id
-      );
-      newMeals[targetIndex] = { ...updatedFood };
-
-      return newMeals;
-    });
-  };
-
-  const handleDelete = (deletedFood: Food) => {
-    setFood(prevFood => prevFood.filter(food => food.id !== deletedFood.id));
-  };
+  const deleteFood = (deletedFood: Food) =>
+    dispatch({ type: "DELETE", payload: deletedFood });
 
   return (
     <DialogTable
       AddDialog={AddDialog}
       UpdateDialog={UpdateDialog}
       DeleteDialog={DeleteDialog}
-      onDelete={handleDelete}
-      onUpdate={handleUpdate}
-      onAdd={handleAdd}
+      onDelete={deleteFood}
+      onUpdate={updateFood}
+      onAdd={addFood}
       collection="food"
-      isLoading={isLoading}
       title="Your food"
       data={food}
       icons={tableIcons}
+      isLoading={isLoading}
       columns={[
         {
           title: "Name",

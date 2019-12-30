@@ -6,6 +6,7 @@ import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import CssBaseline from "@material-ui/core/CssBaseline";
 
 import { TokenProvider } from "./context/token";
+import { FoodProvider } from "./context/food";
 import Header from "./components/layout/header/Header";
 import PageRoutes from "./components/routing/PageRoutes";
 
@@ -13,11 +14,13 @@ const App: React.FC = () => {
   return (
     <MuiPickersUtilsProvider utils={MomentUtils}>
       <TokenProvider>
-        <CssBaseline />
-        <BrowserRouter>
-          <Header />
-          <PageRoutes />
-        </BrowserRouter>
+        <FoodProvider>
+          <CssBaseline />
+          <BrowserRouter>
+            <Header />
+            <PageRoutes />
+          </BrowserRouter>
+        </FoodProvider>{" "}
       </TokenProvider>
     </MuiPickersUtilsProvider>
   );
