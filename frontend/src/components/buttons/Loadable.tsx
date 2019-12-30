@@ -1,12 +1,14 @@
 import React from "react";
 
-import Button from "@material-ui/core/Button";
+import Button, { ButtonProps } from "@material-ui/core/Button";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { makeStyles } from "@material-ui/core/styles";
 
-type Props = {
+type OwnProps = {
   loading: boolean;
 };
+
+type Props = ButtonProps & OwnProps;
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -22,7 +24,11 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const LoadableButton: React.FC<Props> = ({ loading, children }) => {
+const LoadableButton: React.FC<Props> = ({
+  loading,
+  children,
+  ...buttonProps
+}) => {
   const classes = useStyles();
 
   return (
@@ -32,6 +38,7 @@ const LoadableButton: React.FC<Props> = ({ loading, children }) => {
         variant="contained"
         color="primary"
         disabled={loading}
+        {...buttonProps}
       >
         {children}
       </Button>

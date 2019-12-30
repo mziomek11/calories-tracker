@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { AxiosResponse } from "axios";
 
 import { useFormErrors, useInputFields } from "../../../../hooks";
@@ -8,12 +8,10 @@ import { authPost, hasValidationErrors } from "../../../../utils/http";
 import Dialog from "@material-ui/core/Dialog";
 import { Column } from "material-table";
 
-import { FormControllerProps } from "../models";
+import { TableDialogFormControllerProps } from "../models";
 
 type OwnProps = { columns: Column<any>[] };
-type Props = FormControllerProps & OwnProps;
-
-console.error("tu jest kom");
+type Props = TableDialogFormControllerProps & OwnProps;
 
 const Add: React.FC<Props> = ({
   emptyErrors,
@@ -23,22 +21,19 @@ const Add: React.FC<Props> = ({
   columns,
   View
 }) => {
-  const initFields: { [key: string]: string | number } = {};
-
-  // columns.forEach(
-  //   ({ field, type }) =>
-  //     (initFields[field as string] = type === "numeric" ? 0 : "")
-  // );
-  columns.forEach(({ field, type }) => (initFields[field as string] = ""));
+  const initFields: { [key: string]: string } = {};
+  columns.forEach(({ field }) => (initFields[field as string] = ""));
 
   const [fields, handleFieldChange] = useInputFields<typeof initFields>(
     initFields
   );
+  const [loading, setLoading] = useState<boolean>(false);
   const [errors, updateErrors] = useFormErrors<typeof emptyErrors>(emptyErrors);
   const { token } = useContext(TokenContext);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setLoading(true);
     authPost(`/${collection}`, token, fields)
       .then(handleSubmitSuccess)
       .catch(handleSubmitFail);
@@ -52,6 +47,7 @@ const Add: React.FC<Props> = ({
 
   const handleSubmitFail = (err: any) => {
     if (hasValidationErrors(err)) updateErrors(err.response.data.errors);
+    setLoading(false);
   };
 
   return (
@@ -61,6 +57,7 @@ const Add: React.FC<Props> = ({
         fields={fields}
         handleFieldChange={handleFieldChange}
         onSubmit={handleSubmit}
+        loading={loading}
       />
     </Dialog>
   );

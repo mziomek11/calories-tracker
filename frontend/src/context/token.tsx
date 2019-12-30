@@ -1,7 +1,7 @@
 import React, { createContext, useState } from "react";
 import JwtDecode from "jwt-decode";
 
-type Token = string | null;
+export type Token = string | null;
 type TokenContext = {
   token: Token;
   setToken: (token: Token) => void;

@@ -1,7 +1,7 @@
 import React from "react";
 
-import MainGrid from "../../components/layout/grid/Main";
-import DayTable from "../../components/day/Table";
+import MainGrid from "../components/layout/grid/Main";
+import DayTable from "../components/day/Table";
 
 const DayPage = () => {
   return (

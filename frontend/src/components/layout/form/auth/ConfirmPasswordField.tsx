@@ -1,7 +1,7 @@
 import React from "react";
 
-import ErrorableTextField from "../ErrorableTextField";
-import { AuthFieldProps } from "./models";
+import ErrorableTextField from "../textfield/Errorable";
+import { AuthFieldProps } from "./Form";
 
 const ConfirmPasswordField: React.FC<AuthFieldProps> = props => {
   return (

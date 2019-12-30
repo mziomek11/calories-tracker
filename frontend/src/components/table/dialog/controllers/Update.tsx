@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 
 import Dialog from "@material-ui/core/Dialog";
 
@@ -6,10 +6,10 @@ import { useFormErrors, useInputFields } from "../../../../hooks";
 import { TokenContext } from "../../../../context/token";
 import { authPut, hasValidationErrors } from "../../../../utils/http";
 
-import { FormControllerProps } from "../models";
+import { TableDialogFormControllerProps } from "../models";
 
 type OwnProps = { rowData: any };
-type Props = FormControllerProps & OwnProps;
+type Props = TableDialogFormControllerProps & OwnProps;
 
 const Update: React.FC<Props> = ({
   rowData,
@@ -21,10 +21,12 @@ const Update: React.FC<Props> = ({
 }) => {
   const [fields, handleFieldChange] = useInputFields<typeof rowData>(rowData);
   const [errors, updateErrors] = useFormErrors<typeof emptyErrors>(emptyErrors);
+  const [loading, setLoading] = useState<boolean>(false);
   const { token } = useContext(TokenContext);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setLoading(true);
     authPut(`/${collection}/${rowData.id}`, token, fields)
       .then(handleSubmitSuccess)
       .catch(handleSubmitFail);
@@ -37,6 +39,7 @@ const Update: React.FC<Props> = ({
 
   const handleSubmitFail = (err: any) => {
     if (hasValidationErrors(err)) updateErrors(err.response.data.errors);
+    setLoading(false);
   };
 
   return (
@@ -46,6 +49,7 @@ const Update: React.FC<Props> = ({
         fields={fields}
         handleFieldChange={handleFieldChange}
         onSubmit={handleSubmit}
+        loading={loading}
       />
     </Dialog>
   );

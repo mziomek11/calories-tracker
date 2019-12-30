@@ -1,11 +1,11 @@
 import React from "react";
 
-import { useAuthForm } from "../../hooks";
+import { useAuthForm } from "../hooks";
 
-import AuthForm from "../../components/layout/form/auth/Form";
-import EmailField from "../../components/layout/form/auth/EmailField";
-import PasswordField from "../../components/layout/form/auth/PasswordField";
-import ConfirmPasswordField from "../../components/layout/form/auth/ConfirmPasswordField";
+import AuthForm from "../components/layout/form/auth/Form";
+import EmailField from "../components/layout/form/auth/EmailField";
+import PasswordField from "../components/layout/form/auth/PasswordField";
+import ConfirmPasswordField from "../components/layout/form/auth/ConfirmPasswordField";
 
 type RegisterData = {
   email: string;

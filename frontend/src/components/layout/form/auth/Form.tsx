@@ -1,6 +1,8 @@
 import React from "react";
 import { Link as RouterLink } from "react-router-dom";
 
+import { ErrorProps } from "../textfield/Errorable";
+
 import Typography from "@material-ui/core/Typography";
 import Link from "@material-ui/core/Link";
 import { makeStyles } from "@material-ui/core/styles";
@@ -8,6 +10,11 @@ import { makeStyles } from "@material-ui/core/styles";
 import AuthGrid from "../../grid/Auth";
 import LoadableButton from "../../../buttons/Loadable";
 import DefaultError from "../../../errors/Default";
+
+export type AuthFieldProps = ErrorProps & {
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+};
 
 type Props = {
   title: string;

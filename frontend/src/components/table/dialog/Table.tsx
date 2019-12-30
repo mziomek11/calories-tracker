@@ -1,10 +1,10 @@
 import React, { useState, useRef } from "react";
 import { tableIcons } from "../../../utils/table";
-import { FormDialogProps, DialogProps } from "./models";
+import { TableFormDialogProps, TableDialogProps } from "./models";
 
 import MaterialTable, { MaterialTableProps, Action } from "material-table";
 
-import Add from "@material-ui/icons/Add";
+import Add from "@material-ui/icons/AddBox";
 import Edit from "@material-ui/icons/Edit";
 import DeleteOutline from "@material-ui/icons/DeleteOutline";
 
@@ -19,9 +19,9 @@ type OwnProps = {
   onAdd: ActionEvent;
   onUpdate: ActionEvent;
   onDelete: ActionEvent;
-  AddDialog: React.ComponentType<FormDialogProps>;
-  UpdateDialog: React.ComponentType<FormDialogProps>;
-  DeleteDialog: React.ComponentType<DialogProps>;
+  AddDialog: React.ComponentType<TableFormDialogProps>;
+  UpdateDialog: React.ComponentType<TableFormDialogProps>;
+  DeleteDialog: React.ComponentType<TableDialogProps>;
 };
 
 type Props = MaterialTableProps<any> & OwnProps;

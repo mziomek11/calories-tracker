@@ -1,20 +1,21 @@
-export type DialogProps = {
+export type TableDialogProps = {
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
   errors: any;
+  loading: boolean;
 };
 
-export type FormDialogProps = DialogProps & {
+export type TableFormDialogProps = TableDialogProps & {
   fields: any;
   handleFieldChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-export type ControllerProps = {
+export type TableDialogControllerProps = {
   collection: string;
   onSuccess: (obj: any) => void;
   close: VoidFunction;
 };
 
-export type FormControllerProps = ControllerProps & {
+export type TableDialogFormControllerProps = TableDialogControllerProps & {
   emptyErrors: { [key: string]: string };
-  View: React.ComponentType<FormDialogProps>;
+  View: React.ComponentType<TableFormDialogProps>;
 };

@@ -1,52 +1,13 @@
-import React, { forwardRef, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
 import { useDayParams } from "../../hooks";
+import { tableIcons } from "../../utils/table";
 
 import MaterialTable from "material-table";
-
-import AddBox from "@material-ui/icons/AddBox";
-import ArrowUpward from "@material-ui/icons/ArrowUpward";
-import Check from "@material-ui/icons/Check";
-import ChevronRight from "@material-ui/icons/ChevronRight";
-import Clear from "@material-ui/icons/Clear";
-import DeleteOutline from "@material-ui/icons/DeleteOutline";
-import Edit from "@material-ui/icons/Edit";
-import Remove from "@material-ui/icons/Remove";
-import ViewColumn from "@material-ui/icons/ViewColumn";
 
 import Toolbar from "./Toolbar";
 import FoodController from "./FoodController";
 import WeightController from "./WeightController";
-
-const tableIcons = {
-  Add: forwardRef((props, ref: React.Ref<SVGSVGElement>) => (
-    <AddBox {...props} ref={ref} />
-  )),
-  Check: forwardRef((props, ref: React.Ref<SVGSVGElement>) => (
-    <Check {...props} ref={ref} />
-  )),
-  Clear: forwardRef((props, ref: React.Ref<SVGSVGElement>) => (
-    <Clear {...props} ref={ref} />
-  )),
-  Delete: forwardRef((props, ref: React.Ref<SVGSVGElement>) => (
-    <DeleteOutline {...props} ref={ref} />
-  )),
-  DetailPanel: forwardRef((props, ref: React.Ref<SVGSVGElement>) => (
-    <ChevronRight {...props} ref={ref} />
-  )),
-  Edit: forwardRef((props, ref: React.Ref<SVGSVGElement>) => (
-    <Edit {...props} ref={ref} />
-  )),
-  SortArrow: forwardRef((props, ref: React.Ref<SVGSVGElement>) => (
-    <ArrowUpward {...props} ref={ref} />
-  )),
-  ThirdStateCheck: forwardRef((props, ref: React.Ref<SVGSVGElement>) => (
-    <Remove {...props} ref={ref} />
-  )),
-  ViewColumn: forwardRef((props, ref: React.Ref<SVGSVGElement>) => (
-    <ViewColumn {...props} ref={ref} />
-  ))
-};
 
 export type Meal = {
   id: string;

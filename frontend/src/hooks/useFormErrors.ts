@@ -5,7 +5,7 @@ import { ValidationError, GeneralError } from "../models/errors";
 
 export default function<T>(
   emptyErrors: T
-): [T & GeneralError, (v: ValidationError[]) => void] {
+): [T & GeneralError, (v: ValidationError[]) => void, VoidFunction] {
   const initErrors = { ...emptyErrors, general: "" };
   const { setToken } = useContext(TokenContext);
   const [errors, setErrors] = useState<T & GeneralError>(initErrors);
@@ -25,5 +25,7 @@ export default function<T>(
     else setErrors({ ...initErrors, ...errors });
   };
 
-  return [errors, updateErrors];
+  const clearErrors = () => setErrors({ ...initErrors });
+
+  return [errors, updateErrors, clearErrors];
 }

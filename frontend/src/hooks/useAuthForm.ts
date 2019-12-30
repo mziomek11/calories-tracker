@@ -5,6 +5,7 @@ import useFormErrors from "./useFormErrors";
 import useInputFields from "./useInputFields";
 import { TokenContext } from "../context/token";
 import { GeneralError } from "../models/errors";
+import { hasValidationErrors } from "../utils/http";
 
 export default function<T>(
   initData: T,
@@ -28,7 +29,7 @@ export default function<T>(
       const res = await axios.post(endPoint, fields);
       setToken(res.data.token);
     } catch (err) {
-      if (err.response && err.response.data && err.response.data.errors) {
+      if (hasValidationErrors(err)) {
         updateErrors(err.response.data.errors);
         setLoading(false);
       }
