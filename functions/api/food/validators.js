@@ -38,32 +38,32 @@ const validateCalories = body("calories")
   .withMessage("Calories are required")
   .isNumeric()
   .withMessage("Calories must be a number")
-  .custom(value => value >= 0)
-  .withMessage("Calories can't be less than 0");
+  .custom(value => value >= 0 && value < 1000)
+  .withMessage("Wrong calories number");
 
 const validateProtein = body("protein")
   .isLength({ min: 1 })
   .withMessage("Protein is required")
   .isNumeric()
   .withMessage("Protein must be a number")
-  .custom(value => value >= 0)
-  .withMessage("Protein can't be less than 0");
+  .custom(value => value >= 0 && value < 1000)
+  .withMessage("Wrong protein number");
 
 const validateFat = body("fat")
   .isLength({ min: 1 })
   .withMessage("Fat is required")
   .isNumeric()
   .withMessage("Fat must be a number")
-  .custom(value => value >= 0)
-  .withMessage("Fat can't be less than 0");
+  .custom(value => value >= 0 && value < 1000)
+  .withMessage("Wrong fat number");
 
 const validateCarbs = body("carbohydrates")
   .isLength({ min: 1 })
   .withMessage("Carbohydrates are required")
   .isNumeric()
   .withMessage("Carbohydrates must be a number")
-  .custom(value => value >= 0)
-  .withMessage("Carbohydrates can't be less than 0");
+  .custom(value => value >= 0 && value < 1000)
+  .withMessage("Wrong carbohydrates number");
 
 module.exports = {
   validateCreate: () => [

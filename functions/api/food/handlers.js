@@ -5,7 +5,8 @@ const { getUserDocsInCol } = require("../../utils/db");
 const collection = "food";
 
 const getAllOwn = async ({ user: { user_id } }, res) => {
-  const userFood = await getUserDocsInCol(collection, user_id);
+  const query = await getUserDocsInCol(collection, user_id, true);
+  const userFood = await query.orderBy("name").get();
 
   const food = userFood.docs.map(doc => {
     const { user, ...foodData } = doc.data();
