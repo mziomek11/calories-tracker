@@ -1,4 +1,4 @@
-const { body } = require("express-validator");
+const { body, query } = require("express-validator");
 
 const { docExistsAndIsOwner } = require("../../utils/db");
 
@@ -11,14 +11,11 @@ const foodExists = async (val, { req: { user } }) => {
   }
 };
 
-const dayExists = async (val, { req: { user } }) => {
-  const { user_id } = user;
-  const path = `/days/${val}`;
-
-  if (!val || !(await docExistsAndIsOwner(path, user_id))) {
-    return Promise.reject("Day doesn't exists");
-  }
-};
+const queryDayValidation = query("day")
+  .isLength({ min: 1 })
+  .withMessage("Day is required")
+  .isISO8601({ strict: true })
+  .withMessage("Day is not valid");
 
 const foodValidation = body("food")
   .isLength({ min: 1 })
@@ -33,15 +30,18 @@ const weightValidation = body("weight")
   .custom(value => value >= 0)
   .withMessage("Weight can't be less than 0");
 
-const dayValidation = body("day")
+const dayWalidation = body("day")
   .isLength({ min: 1 })
   .withMessage("Day is required")
-  .custom(dayExists);
+  .isISO8601({ strict: true })
+  .withMessage("Day is not valid");
 
-const validateCreate = () => [foodValidation, weightValidation, dayValidation];
+const validateGet = () => [queryDayValidation];
+const validateCreate = () => [foodValidation, weightValidation, dayWalidation];
 const validateUpdate = () => [foodValidation, weightValidation];
 
 module.exports = {
+  validateGet,
   validateCreate,
   validateUpdate
 };

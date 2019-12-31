@@ -1,8 +1,8 @@
 const { Router } = require("express");
 
-const { create, update } = require("./handlers");
+const { create, update, getDayMeals } = require("./handlers");
 const { deleteDoc } = require("../../utils/db");
-const { validateCreate, validateUpdate } = require("./validators");
+const { validateCreate, validateUpdate, validateGet } = require("./validators");
 const {
   validationErrors,
   createDocExistsAndIsOwner
@@ -11,6 +11,7 @@ const docExistsAndIsOwner = createDocExistsAndIsOwner("meals");
 
 const router = Router();
 
+router.get("/", validateGet(), validationErrors, getDayMeals);
 router.post("/", validateCreate(), validationErrors, create);
 router.put(
   "/:id",
