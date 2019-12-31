@@ -27,8 +27,8 @@ const weightValidation = body("weight")
   .withMessage("Weight is required")
   .isNumeric()
   .withMessage("Weight must be a number")
-  .custom(value => value >= 0)
-  .withMessage("Weight can't be less than 0");
+  .custom(value => value >= 0 && value < 10000)
+  .withMessage("Wrong weight");
 
 const dayWalidation = body("day")
   .isLength({ min: 1 })
