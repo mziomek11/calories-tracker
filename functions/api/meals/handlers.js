@@ -1,5 +1,6 @@
 const { db } = require("../../firebase");
 const { withTryCatch } = require("../../utils/errors");
+const { prepareNumberToDBsave } = require("../../utils");
 
 const collection = "meals";
 
@@ -22,7 +23,12 @@ const create = async (
   { user: { user_id }, body: { food, weight, day } },
   res
 ) => {
-  const meal = { user: user_id, food, weight, day };
+  const meal = {
+    user: user_id,
+    food,
+    weight: prepareNumberToDBsave(weight),
+    day
+  };
   const createdDoc = await db.collection(collection).add(meal);
   const responseData = { ...meal, id: createdDoc.id };
 
@@ -30,7 +36,7 @@ const create = async (
 };
 
 const update = async ({ body: { food, weight }, doc }, res) => {
-  const updateData = { food, weight };
+  const updateData = { food, weight: prepareNumberToDBsave(weight) };
   await doc.ref.update(updateData);
 
   return res.status(200).json({ msg: "Success" });

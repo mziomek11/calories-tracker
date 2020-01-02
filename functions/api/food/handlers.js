@@ -2,6 +2,7 @@ const { db } = require("../../firebase");
 const { deleteDoc } = require("../../utils/db");
 const { withTryCatch } = require("../../utils/errors");
 const { getUserDocsInCol } = require("../../utils/db");
+const { prepareNumberToDBsave } = require("../../utils");
 
 const collection = "food";
 
@@ -28,10 +29,10 @@ const create = async ({ user: { user_id }, body }, res) => {
   const newFood = {
     user: user_id,
     name,
-    calories,
-    protein,
-    carbohydrates,
-    fat
+    calories: prepareNumberToDBsave(calories),
+    protein: prepareNumberToDBsave(protein),
+    carbohydrates: prepareNumberToDBsave(carbohydrates),
+    fat: prepareNumberToDBsave(fat)
   };
 
   const createdDoc = await db.collection(collection).add(newFood);
@@ -44,10 +45,10 @@ const update = async ({ body, doc }, res) => {
   const { name, calories, protein, carbohydrates, fat } = body;
   const updateData = {
     name,
-    calories,
-    protein,
-    carbohydrates,
-    fat
+    calories: prepareNumberToDBsave(calories),
+    protein: prepareNumberToDBsave(protein),
+    carbohydrates: prepareNumberToDBsave(carbohydrates),
+    fat: prepareNumberToDBsave(fat)
   };
 
   await doc.ref.update(updateData);
