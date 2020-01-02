@@ -1,6 +1,6 @@
 import React from "react";
 
-import Toolbar from "@material-ui/core/Toolbar";
+import Toolbar, { ToolbarProps } from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
@@ -10,7 +10,7 @@ import AddBox from "@material-ui/icons/AddBox";
 
 import Caledar from "./calendar/Calendar";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(() => ({
   leftSide: {
     display: "flex",
     flexGrow: 1,
@@ -18,7 +18,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default (props: any) => {
+export default (props: ToolbarProps) => {
   const classes = useStyles();
 
   return (
@@ -30,7 +30,7 @@ export default (props: any) => {
 
       <Tooltip title="Add">
         <IconButton
-          onClick={props.actions[0].onClick}
+          onClick={(props as any).actions[0].onClick}
           color="inherit"
           aria-label="add item"
         >

@@ -1,159 +1,159 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext, useCallback } from "react";
+import moment from "moment";
+import { useHistory } from "react-router-dom";
 
 import { useDayParams } from "../../hooks";
+import { TokenContext } from "../../context/token";
+import { FoodContext, Food } from "../../context/food";
 import { tableIcons } from "../../utils/table";
-
-import MaterialTable from "material-table";
+import { reverseDayMonthYear } from "../../utils/date";
+import {
+  authGet,
+  authPost,
+  authPut,
+  authDelete,
+  hasAuthError
+} from "../../utils/http";
 
 import Toolbar from "./Toolbar";
-import FoodController from "./FoodController";
-import WeightController from "./WeightController";
+import DialogTable from "../table/dialog/Table";
+import AddDialog from "./dialogs/Add";
+import UpdateDialog from "./dialogs/Update";
+import DeleteDialog from "./dialogs/Delete";
+import Summary from "./Summary";
 
-export type Meal = {
+type ResponseMeal = {
   id: string;
   food: string;
   weight: number;
-  calories: number;
-  fat: number;
-  carbohydrates: number;
-  protein: number;
 };
 
-const fakeMeals: Meal[] = [
-  {
-    id: "1",
-    food: "Milk",
-    weight: 250,
-    calories: 100,
-    fat: 20,
-    carbohydrates: 4,
-    protein: 15
-  },
-  {
-    id: "2",
-    food: "Ham",
-    weight: 100,
-    calories: 70,
-    fat: 12,
-    carbohydrates: 8,
-    protein: 12
-  },
-  {
-    id: "3",
-    food: "Bread",
-    weight: 400,
-    calories: 600,
-    fat: 8,
-    carbohydrates: 140,
-    protein: 12
-  }
-];
+export type MealWithFood = ResponseMeal & Omit<Food, "name">;
+const collection: string = "meals";
 
-const Table = () => {
-  const [isLoading, setLoading] = useState<boolean>(true);
-  const [meals, setMeals] = useState<Meal[]>(fakeMeals);
+const DayTable = () => {
+  const [mealsLoading, setMealsLoading] = useState<boolean>(true);
+  const [meals, setMeals] = useState<MealWithFood[]>([]);
+  const { token, setToken } = useContext(TokenContext);
+  const { food, isLoading } = useContext(FoodContext);
+  const history = useHistory();
   const params = useDayParams();
 
+  const combineMealWithFood = useCallback(
+    (resMeal: ResponseMeal): MealWithFood => {
+      const targetFood = food.find(f => f.id === resMeal.food)!;
+
+      return {
+        ...resMeal,
+        food: targetFood.name,
+        calories: (targetFood.calories * resMeal.weight) / 100,
+        fat: (targetFood.fat * resMeal.weight) / 100,
+        carbohydrates: (targetFood.carbohydrates * resMeal.weight) / 100,
+        protein: (targetFood.protein * resMeal.weight) / 100
+      };
+    },
+    [food]
+  );
+
   useEffect(() => {
-    setLoading(true);
-    new Promise((resolve, reject) => {
-      setTimeout(() => resolve(), 1000);
-    }).then(res => setLoading(false));
-  }, [params.date]);
+    if (!moment(params.date).isValid()) {
+      history.push("/day");
+    } else if (!isLoading) {
+      setMealsLoading(true);
+      authGet(`/meals?day=${params.date}`, token)
+        .then(({ data }) => {
+          const mappedMeals = data.meals.map(combineMealWithFood);
+          setMeals([...mappedMeals]);
+          setMealsLoading(false);
+        })
+        .catch(err => {
+          if (hasAuthError(err)) setToken(null);
+          else setMealsLoading(false);
+        });
+    }
+  }, [params.date, token, isLoading, history, setToken, combineMealWithFood]);
 
-  const handleRowAdd = (newMeal: Meal): Promise<void> => {
-    return new Promise((resolve, reject) => {
-      setMeals(oldMeals => [
-        ...oldMeals,
-        {
-          calories: 123,
-          fat: 5,
-          carbohydrates: 10,
-          protein: 30,
-          food: "Unnamed",
-          weight: 0,
-          ...newMeal
-        }
-      ]);
-      resolve();
+  const addMeal = ({ food, weight }: MealWithFood) =>
+    new Promise(async (resolve, reject) => {
+      try {
+        const body = { day: params.date, food, weight };
+        const { data } = await authPost(`/${collection}`, token, body);
+        const resMeal: ResponseMeal = {
+          id: data.id,
+          food: data.food,
+          weight: data.weight
+        };
+        const fullMealData = combineMealWithFood(resMeal);
+        setMeals(prevMeals => [...prevMeals, fullMealData]);
+        resolve();
+      } catch (err) {
+        reject(err);
+      }
     });
-  };
 
-  const handleRowUpdate = (updatedMeal: any): Promise<void> => {
-    return new Promise((resolve, reject) => {
-      setMeals(oldMeals => {
-        const newMeals = [...oldMeals];
-        const targetIndex = newMeals.findIndex(
-          meal => meal.id === updatedMeal.id
-        );
-        newMeals[targetIndex] = { ...updatedMeal };
-
-        return newMeals;
-      });
-
-      resolve();
+  const updateMeal = ({ food, weight, id }: MealWithFood) =>
+    new Promise(async (resolve, reject) => {
+      try {
+        const body = { food, weight, id };
+        await authPut(`/${collection}/${id}`, token, body);
+        const fullMealData = combineMealWithFood(body);
+        setMeals(prevMeals => {
+          const newMeals = [...prevMeals];
+          const targetIndex = newMeals.findIndex(m => m.id === id);
+          newMeals[targetIndex] = fullMealData;
+          return newMeals;
+        });
+        resolve();
+      } catch (err) {
+        reject(err);
+      }
     });
-  };
 
-  const handleRowDelete = (deletedMeal: Meal): Promise<void> => {
-    return new Promise((resolve, reject) => {
-      setMeals(oldMeals => oldMeals.filter(meal => meal.id !== deletedMeal.id));
-      resolve();
+  const deleteMeal = ({ id }: MealWithFood) =>
+    new Promise(async (resolve, reject) => {
+      try {
+        await authDelete(`/${collection}/${id}`, token);
+        setMeals(prevMeals => prevMeals.filter(meal => meal.id !== id));
+        resolve();
+      } catch (err) {
+        reject(err);
+      }
     });
-  };
 
   return (
-    <MaterialTable
-      title={params.date}
-      isLoading={isLoading}
-      data={meals}
-      editable={{
-        onRowAdd: handleRowAdd,
-        onRowUpdate: handleRowUpdate,
-        onRowDelete: handleRowDelete
-      }}
-      components={{
-        Toolbar: Toolbar
-      }}
-      icons={tableIcons}
-      options={{
-        paging: false,
-        search: false
-      }}
-      columns={[
-        {
-          title: "Food",
-          field: "food",
-          editComponent: FoodController
-        },
-        {
-          title: "Weight",
-          field: "weight",
-          type: "numeric",
-          editComponent: WeightController
-        },
-        {
-          title: "Calories",
-          field: "calories",
-          type: "numeric",
-          editable: "never"
-        },
-        { title: "Fat", field: "fat", type: "numeric", editable: "never" },
-        {
-          title: "Carbs",
-          field: "carbohydrates",
-          type: "numeric",
-          editable: "never"
-        },
-        {
-          title: "Protein",
-          field: "protein",
-          type: "numeric",
-          editable: "never"
-        }
-      ]}
-    />
+    <>
+      <DialogTable
+        AddDialog={AddDialog}
+        UpdateDialog={UpdateDialog}
+        DeleteDialog={DeleteDialog}
+        onAdd={addMeal}
+        onUpdate={updateMeal}
+        onDelete={deleteMeal}
+        title={reverseDayMonthYear(params.date)}
+        isLoading={mealsLoading || isLoading}
+        data={meals}
+        components={{
+          Toolbar: Toolbar
+        }}
+        icons={tableIcons}
+        options={{
+          search: false,
+          paging: false,
+          draggable: false
+        }}
+        columns={[
+          { title: "Name", field: "food" },
+          { title: "Weight (g)", field: "weight", type: "numeric" },
+          { title: "Calories", field: "calories", type: "numeric" },
+          { title: "Fat (g)", field: "fat", type: "numeric" },
+          { title: "Carbs (g)", field: "carbohydrates", type: "numeric" },
+          { title: "Protein (g)", field: "protein", type: "numeric" }
+        ]}
+      />
+
+      {meals.length > 0 && <Summary meals={meals} />}
+    </>
   );
 };
 
-export default Table;
+export default DayTable;

@@ -1,33 +1,29 @@
 import React, { useState, useRef } from "react";
+
 import { tableIcons } from "../../../utils/table";
-import { TableFormDialogProps, TableDialogProps } from "./models";
+import { TableDialogProps } from "./models";
 
 import MaterialTable, { MaterialTableProps, Action } from "material-table";
-
 import Add from "@material-ui/icons/AddBox";
 import Edit from "@material-ui/icons/Edit";
 import DeleteOutline from "@material-ui/icons/DeleteOutline";
 
-import AddDialogController from "./controllers/Add";
-import UpdateDialogController from "./controllers/Update";
-import DeleteDialogController from "./controllers/Delete";
+import DialogController from "./Controller";
 
-type ActionEvent = (data: any) => void;
+type ActionEvent = (data: any) => Promise<any>;
 
 type OwnProps = {
-  collection: string;
   onAdd: ActionEvent;
   onUpdate: ActionEvent;
   onDelete: ActionEvent;
-  AddDialog: React.ComponentType<TableFormDialogProps>;
-  UpdateDialog: React.ComponentType<TableFormDialogProps>;
+  AddDialog: React.ComponentType<TableDialogProps>;
+  UpdateDialog: React.ComponentType<TableDialogProps>;
   DeleteDialog: React.ComponentType<TableDialogProps>;
 };
 
 type Props = MaterialTableProps<any> & OwnProps;
 
 const DialogTable: React.FC<Props> = ({
-  collection,
   onAdd,
   onUpdate,
   onDelete,
@@ -54,19 +50,19 @@ const DialogTable: React.FC<Props> = ({
   const addAction: Action<any> = {
     isFreeAction: true,
     icon: () => <Add />,
-    tooltip: `Add ${collection}`,
-    onClick: (_, { tableData, ...rowData }) => openDialog(rowData, setAdding)
+    tooltip: "Add",
+    onClick: () => setAdding(true)
   };
 
   const updateAction: Action<any> = {
     icon: () => <Edit />,
-    tooltip: `Edit ${collection}`,
+    tooltip: "Edit",
     onClick: (_, { tableData, ...rowData }) => openDialog(rowData, setUpdating)
   };
 
   const deleteAction: Action<any> = {
     icon: () => <DeleteOutline />,
-    tooltip: `Delete ${collection}`,
+    tooltip: "Delete",
     onClick: (_, { tableData, ...rowData }) => openDialog(rowData, setDeleting)
   };
 
@@ -82,32 +78,30 @@ const DialogTable: React.FC<Props> = ({
         {...tableProps}
       />
       {isAdding && (
-        <AddDialogController
+        <DialogController
           emptyErrors={emptyErrors}
-          onSuccess={onAdd}
+          onSubmit={onAdd}
           View={AddDialog}
           close={closeAddDialog}
-          collection={collection}
-          columns={tableProps.columns}
+          initialFields={emptyErrors}
         />
       )}
       {isUpdating && (
-        <UpdateDialogController
+        <DialogController
           emptyErrors={emptyErrors}
-          onSuccess={onUpdate}
+          onSubmit={onUpdate}
           View={UpdateDialog}
           close={closeUpdateDialog}
-          rowData={rowDataRef.current}
-          collection={collection}
+          initialFields={rowDataRef.current}
         />
       )}
       {isDeleting && (
-        <DeleteDialogController
-          onSuccess={onDelete}
+        <DialogController
+          emptyErrors={emptyErrors}
+          onSubmit={onDelete}
           View={DeleteDialog}
           close={closeDeleteDialog}
-          rowData={rowDataRef.current}
-          collection={collection}
+          initialFields={rowDataRef.current}
         />
       )}
     </>

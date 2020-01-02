@@ -7,6 +7,8 @@ export default function<T>(
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
+    if (!name) throw Error("Field must have name");
+
     setFields(prevData => ({ ...prevData, [name]: value }));
   };
 

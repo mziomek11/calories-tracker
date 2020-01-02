@@ -28,17 +28,19 @@ type Action =
   | { type: "ADD" | "UPDATE" | "DELETE"; payload: Food }
   | { type: "REPLACE"; payload: Food[] };
 
+const sortFoodFn = (f1: Food, f2: Food) => f1.name.localeCompare(f2.name);
+
 const reducer = (state: Food[], action: Action): Food[] => {
   switch (action.type) {
     case "REPLACE":
       return action.payload;
     case "ADD":
-      return [...state, action.payload];
+      return [...state, action.payload].sort(sortFoodFn);
     case "UPDATE":
       const newFood = [...state];
       const index = newFood.findIndex(food => food.id === action.payload.id);
       newFood[index] = { ...action.payload };
-      return newFood;
+      return newFood.sort(sortFoodFn);
     case "DELETE":
       return state.filter(food => food.id !== action.payload.id);
     default:
@@ -54,7 +56,7 @@ export const FoodContext = createContext<Context>({
 
 export const FoodProvider: React.FC = ({ children }) => {
   const [food, dispatch] = useReducer(reducer, []);
-  const [isLoading, setLoading] = useState<boolean>(false);
+  const [isLoading, setLoading] = useState<boolean>(true);
   const { token } = useContext(TokenContext);
 
   useEffect(() => {

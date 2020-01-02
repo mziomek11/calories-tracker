@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 
 import { useDayParams } from "../../../hooks";
-import { dateToDayMonthYearIso } from "../../../utils/date";
+import { dateToISO } from "../../../utils/date";
 
 import Opener from "./Opener";
 import Modal from "./Modal";
@@ -14,7 +14,7 @@ const Calendar = () => {
 
   const handleOpen = () => setOpen(true);
   const handleClose = (date: Date) => {
-    const dayMonthYearIso = dateToDayMonthYearIso(date);
+    const dayMonthYearIso = dateToISO(date);
     if (dayMonthYearIso !== params.date) {
       history.push(`/day/${dayMonthYearIso}`);
     }

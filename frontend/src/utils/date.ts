@@ -1,7 +1,8 @@
-export function dateToDayMonthYearIso(date: Date) {
-  const isoDate = date.toISOString();
-  const [year, month, day] = isoDate.slice(0, 10).split("-");
-  const dayMonthYearIso = `${day}-${month}-${year}`;
+export function reverseDayMonthYear(date: string): string {
+  const [a, b, c] = date.split("-");
+  return `${c}-${b}-${a}`;
+}
 
-  return dayMonthYearIso;
+export function dateToISO(date: Date) {
+  return date.toISOString().slice(0, 10);
 }

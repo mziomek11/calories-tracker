@@ -1,9 +1,9 @@
 import React from "react";
 
 import FormDialog from "./Form";
-import { TableFormDialogProps } from "../../table/dialog/models";
+import { TableDialogProps } from "../../table/dialog/models";
 
-const Update: React.FC<TableFormDialogProps> = props => {
+const Update: React.FC<TableDialogProps> = props => {
   return (
     <FormDialog
       title="Update food"

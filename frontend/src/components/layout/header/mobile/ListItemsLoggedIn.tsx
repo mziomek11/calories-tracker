@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 
 import { TokenContext } from "../../../../context/token";
-import { dateToDayMonthYearIso } from "../../../../utils/date";
 
 import LogoutIcon from "@material-ui/icons/Person";
 import CalendarIcon from "@material-ui/icons/CalendarToday";
@@ -15,11 +14,7 @@ const ListItemsLoggedIn = () => {
 
   return (
     <>
-      <ListItem
-        Icon={CalendarIcon}
-        text="Days"
-        redirectLink={`/day/${dateToDayMonthYearIso(new Date())}`}
-      />
+      <ListItem Icon={CalendarIcon} text="Days" redirectLink="/day" />
       <ListItem Icon={FoodIcon} text="Food" redirectLink="/food" />
       <ListItem Icon={LogoutIcon} text="Logout" onClick={logout} />
     </>

@@ -3,9 +3,9 @@ import React from "react";
 import ErrorableTextField from "../../layout/form/textfield/Errorable";
 import DefaultError from "../../errors/Default";
 import FormDialog, { FormDialogProps } from "../../dialogs/Form";
-import { TableFormDialogProps } from "../../table/dialog/models";
+import { TableDialogProps } from "../../table/dialog/models";
 
-type Props = TableFormDialogProps & FormDialogProps;
+type Props = TableDialogProps & FormDialogProps;
 
 const Form: React.FC<Props> = ({
   errors,
@@ -31,7 +31,7 @@ const Form: React.FC<Props> = ({
         value={fields.calories}
         onChange={handleFieldChange}
         fullWidth
-        label="Calories/100g"
+        label="Calories"
         type="number"
         margin="dense"
         err={errors.calories}
@@ -41,7 +41,7 @@ const Form: React.FC<Props> = ({
         value={fields.fat}
         onChange={handleFieldChange}
         fullWidth
-        label="Fat/100g"
+        label="Fat"
         type="number"
         margin="dense"
         err={errors.fat}
@@ -51,7 +51,7 @@ const Form: React.FC<Props> = ({
         value={fields.carbohydrates}
         onChange={handleFieldChange}
         fullWidth
-        label="Carbs/100g"
+        label="Carbs"
         type="number"
         margin="dense"
         err={errors.carbohydrates}
@@ -61,7 +61,7 @@ const Form: React.FC<Props> = ({
         value={fields.protein}
         onChange={handleFieldChange}
         fullWidth
-        label="Protein/100g"
+        label="Protein"
         type="number"
         margin="dense"
         err={errors.protein}

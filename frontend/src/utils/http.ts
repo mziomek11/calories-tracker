@@ -27,5 +27,9 @@ export function authDelete(path: string, token: Token) {
 }
 
 export function hasValidationErrors(err: any): boolean {
-  return err.response && err.response.data && err.response.data.errors;
+  return err && err.response && err.response.data && err.response.data.errors;
+}
+
+export function hasAuthError(err: any): boolean {
+  return hasValidationErrors(err) && err.response.data.errors["authorization"];
 }

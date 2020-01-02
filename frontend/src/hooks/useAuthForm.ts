@@ -22,7 +22,7 @@ export default function<T>(
   const [fields, handleInputChange] = useInputFields<T>(initData);
   const [errors, updateErrors] = useFormErrors<T>(initData);
 
-  const register = async () => {
+  const onSubmit = async () => {
     setLoading(true);
 
     try {
@@ -36,5 +36,5 @@ export default function<T>(
     }
   };
 
-  return [fields, errors, isLoading, handleInputChange, register];
+  return [fields, errors, isLoading, handleInputChange, onSubmit];
 }
