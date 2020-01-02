@@ -15,11 +15,11 @@ import {
   hasAuthError
 } from "../../utils/http";
 
-import Toolbar from "./Toolbar";
 import DialogTable from "../table/dialog/Table";
 import AddDialog from "./dialogs/Add";
 import UpdateDialog from "./dialogs/Update";
 import DeleteDialog from "./dialogs/Delete";
+import Toolbar from "./Toolbar";
 import Summary from "./Summary";
 
 type ResponseMeal = {
@@ -149,6 +149,11 @@ const DayTable = () => {
           { title: "Carbs (g)", field: "carbohydrates", type: "numeric" },
           { title: "Protein (g)", field: "protein", type: "numeric" }
         ]}
+        localization={{
+          body: {
+            emptyDataSourceMessage: "No meals"
+          }
+        }}
       />
 
       {meals.length > 0 && <Summary meals={meals} />}

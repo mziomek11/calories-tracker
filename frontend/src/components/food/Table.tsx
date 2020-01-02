@@ -63,6 +63,11 @@ const Table = () => {
       icons={tableIcons}
       isLoading={isLoading}
       options={{ draggable: false }}
+      localization={{
+        body: {
+          emptyDataSourceMessage: "No food"
+        }
+      }}
       columns={[
         {
           title: "Name (100g serving)",

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import { MealWithFood } from "./Table";
+import { toDecimalPlaces } from "../../utils/number";
 
 import MaterialTable from "material-table";
 import Paper from "@material-ui/core/Paper";
@@ -16,7 +17,9 @@ const useStyles = makeStyles(theme => ({
     justifyContent: "center"
   },
   paper: {
-    marginTop: theme.spacing(3)
+    marginTop: theme.spacing(3),
+    marginBottom: theme.spacing(3),
+    maxWidth: "100%"
   }
 }));
 
@@ -25,10 +28,6 @@ const initialTotal = {
   carbohydrates: 0,
   fat: 0,
   protein: 0
-};
-
-const asNumber = (val: string | number): number => {
-  return typeof val === "string" ? parseInt(val) : val;
 };
 
 const Summary: React.FC<Props> = ({ meals }) => {
@@ -46,7 +45,14 @@ const Summary: React.FC<Props> = ({ meals }) => {
       initialTotal
     );
 
-    setTotal(newTotal);
+    const decimalRoundedTotal = {
+      calories: toDecimalPlaces(newTotal.calories, 1),
+      fat: toDecimalPlaces(newTotal.fat, 1),
+      carbohydrates: toDecimalPlaces(newTotal.carbohydrates, 1),
+      protein: toDecimalPlaces(newTotal.protein, 1)
+    };
+
+    setTotal(decimalRoundedTotal);
   }, [meals]);
 
   return (

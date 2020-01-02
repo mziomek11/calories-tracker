@@ -31,7 +31,7 @@ export default (props: ToolbarProps) => {
       <Tooltip title="Add">
         <IconButton
           onClick={(props as any).actions[0].onClick}
-          color="inherit"
+          color="default"
           aria-label="add item"
         >
           <AddBox />

@@ -4,16 +4,16 @@ import DefaultError from "../../errors/Default";
 import FormDialog from "../../dialogs/Form";
 import { TableDialogProps } from "../../table/dialog/models";
 
-const Delete: React.FC<TableDialogProps> = ({ errors, ...rest }) => {
+const Delete: React.FC<TableDialogProps> = props => {
   return (
     <FormDialog
-      title="Are you sure?"
+      title={`Are you sure you want to delete ${props.fields.name}?`}
       contentText="This food will be deleted from each day in
-      which it appeared"
+      which it appeared."
       buttonText="Delete"
-      {...rest}
+      {...props}
     >
-      {errors.general && <DefaultError text={errors.general} />}
+      {props.errors.general && <DefaultError text={props.errors.general} />}
     </FormDialog>
   );
 };
