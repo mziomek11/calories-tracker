@@ -8,7 +8,8 @@ const getDayMeals = async ({ user: { user_id }, query: { day } }, res) => {
   const query = db
     .collection(collection)
     .where("user", "==", user_id)
-    .where("day", "==", day);
+    .where("day", "==", day)
+    .orderBy("createdAt");
   const userDayMeals = await query.get();
 
   const meals = userDayMeals.docs.map(doc => {
@@ -27,7 +28,8 @@ const create = async (
     user: user_id,
     food,
     weight: prepareNumberToDBsave(weight),
-    day
+    day,
+    createdAt: new Date()
   };
   const createdDoc = await db.collection(collection).add(meal);
   const responseData = { ...meal, id: createdDoc.id };
