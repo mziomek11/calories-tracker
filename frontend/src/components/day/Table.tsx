@@ -1,78 +1,32 @@
-import React, { useState, useEffect, useContext, useCallback } from "react";
-import moment from "moment";
-import { useHistory } from "react-router-dom";
+import React, { useContext } from "react";
 
+import { ResponseMeal, MealWithFood } from "../../pages/day";
 import { useDayParams } from "../../hooks";
 import { TokenContext } from "../../context/token";
-import { FoodContext, Food } from "../../context/food";
+import { FoodContext } from "../../context/food";
 import { tableIcons } from "../../utils/table";
 import { reverseDayMonthYear } from "../../utils/date";
-import {
-  authGet,
-  authPost,
-  authPut,
-  authDelete,
-  hasAuthError
-} from "../../utils/http";
+import { combineMealWithFood } from "../../utils/meals";
+import { authPost, authPut, authDelete } from "../../utils/http";
 
 import DialogTable from "../table/dialog/Table";
 import AddDialog from "./dialogs/Add";
 import UpdateDialog from "./dialogs/Update";
 import DeleteDialog from "./dialogs/Delete";
-import NoFoodDialog from "./dialogs/NoFood";
 import Toolbar from "./Toolbar";
-import Summary from "./Summary";
 
-type ResponseMeal = {
-  id: string;
-  food: string;
-  weight: number;
+type Props = {
+  mealsLoading: boolean;
+  meals: MealWithFood[];
+  setMeals: React.Dispatch<React.SetStateAction<MealWithFood[]>>;
 };
 
-export type MealWithFood = ResponseMeal & Omit<Food, "name">;
 const collection: string = "meals";
 
-const DayTable = () => {
-  const [mealsLoading, setMealsLoading] = useState<boolean>(true);
-  const [meals, setMeals] = useState<MealWithFood[]>([]);
-  const { token, setToken } = useContext(TokenContext);
-  const { food, isLoading } = useContext(FoodContext);
-  const history = useHistory();
+const DayTable: React.FC<Props> = ({ meals, setMeals, mealsLoading }) => {
+  const { token } = useContext(TokenContext);
+  const fooCtx = useContext(FoodContext);
   const params = useDayParams();
-
-  const combineMealWithFood = useCallback(
-    (resMeal: ResponseMeal): MealWithFood => {
-      const targetFood = food.find(f => f.id === resMeal.food)!;
-
-      return {
-        ...resMeal,
-        food: targetFood.name,
-        calories: (targetFood.calories * resMeal.weight) / 100,
-        fat: (targetFood.fat * resMeal.weight) / 100,
-        carbohydrates: (targetFood.carbohydrates * resMeal.weight) / 100,
-        protein: (targetFood.protein * resMeal.weight) / 100
-      };
-    },
-    [food]
-  );
-
-  useEffect(() => {
-    if (!moment(params.date).isValid()) {
-      history.push("/day");
-    } else if (!isLoading) {
-      setMealsLoading(true);
-      authGet(`/meals?day=${params.date}`, token)
-        .then(({ data }) => {
-          const mappedMeals = data.meals.map(combineMealWithFood);
-          setMeals([...mappedMeals]);
-          setMealsLoading(false);
-        })
-        .catch(err => {
-          if (hasAuthError(err)) setToken(null);
-          else setMealsLoading(false);
-        });
-    }
-  }, [params.date, token, isLoading, history, setToken, combineMealWithFood]);
 
   const addMeal = ({ food, weight }: MealWithFood) =>
     new Promise(async (resolve, reject) => {
@@ -84,7 +38,7 @@ const DayTable = () => {
           food: data.food,
           weight: data.weight
         };
-        const fullMealData = combineMealWithFood(resMeal);
+        const fullMealData = combineMealWithFood(resMeal, fooCtx.food);
         setMeals(prevMeals => [...prevMeals, fullMealData]);
         resolve();
       } catch (err) {
@@ -97,7 +51,7 @@ const DayTable = () => {
       try {
         const body = { food, weight, id };
         await authPut(`/${collection}/${id}`, token, body);
-        const fullMealData = combineMealWithFood(body);
+        const fullMealData = combineMealWithFood(body, fooCtx.food);
         setMeals(prevMeals => {
           const newMeals = [...prevMeals];
           const targetIndex = newMeals.findIndex(m => m.id === id);
@@ -122,44 +76,39 @@ const DayTable = () => {
     });
 
   return (
-    <>
-      {!isLoading && food.length === 0 && <NoFoodDialog />}
-      <DialogTable
-        AddDialog={AddDialog}
-        UpdateDialog={UpdateDialog}
-        DeleteDialog={DeleteDialog}
-        onAdd={addMeal}
-        onUpdate={updateMeal}
-        onDelete={deleteMeal}
-        title={reverseDayMonthYear(params.date)}
-        isLoading={mealsLoading || isLoading}
-        data={meals}
-        components={{
-          Toolbar: Toolbar
-        }}
-        icons={tableIcons}
-        options={{
-          search: false,
-          paging: false,
-          draggable: false
-        }}
-        columns={[
-          { title: "Name", field: "food" },
-          { title: "Weight (g)", field: "weight", type: "numeric" },
-          { title: "Calories", field: "calories", type: "numeric" },
-          { title: "Fat (g)", field: "fat", type: "numeric" },
-          { title: "Carbs (g)", field: "carbohydrates", type: "numeric" },
-          { title: "Protein (g)", field: "protein", type: "numeric" }
-        ]}
-        localization={{
-          body: {
-            emptyDataSourceMessage: "No meals"
-          }
-        }}
-      />
-
-      {meals.length > 0 && <Summary meals={meals} />}
-    </>
+    <DialogTable
+      AddDialog={AddDialog}
+      UpdateDialog={UpdateDialog}
+      DeleteDialog={DeleteDialog}
+      onAdd={addMeal}
+      onUpdate={updateMeal}
+      onDelete={deleteMeal}
+      title={reverseDayMonthYear(params.date)}
+      isLoading={mealsLoading || fooCtx.isLoading}
+      data={meals}
+      components={{
+        Toolbar: Toolbar
+      }}
+      icons={tableIcons}
+      options={{
+        search: false,
+        paging: false,
+        draggable: false
+      }}
+      columns={[
+        { title: "Name", field: "food" },
+        { title: "Weight (g)", field: "weight", type: "numeric" },
+        { title: "Calories", field: "calories", type: "numeric" },
+        { title: "Fat (g)", field: "fat", type: "numeric" },
+        { title: "Carbs (g)", field: "carbohydrates", type: "numeric" },
+        { title: "Protein (g)", field: "protein", type: "numeric" }
+      ]}
+      localization={{
+        body: {
+          emptyDataSourceMessage: "No meals"
+        }
+      }}
+    />
   );
 };
 

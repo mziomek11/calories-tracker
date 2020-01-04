@@ -7,7 +7,7 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 
 import { TokenProvider } from "./context/token";
 import { FoodProvider } from "./context/food";
-import Header from "./components/layout/header/Header";
+import Header from "./components/header/Header";
 import PageRoutes from "./components/routing/PageRoutes";
 
 const App: React.FC = () => {
@@ -20,7 +20,7 @@ const App: React.FC = () => {
             <Header />
             <PageRoutes />
           </BrowserRouter>
-        </FoodProvider>{" "}
+        </FoodProvider>
       </TokenProvider>
     </MuiPickersUtilsProvider>
   );

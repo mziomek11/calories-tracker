@@ -2,9 +2,9 @@ import React from "react";
 
 import { useAuthForm } from "../hooks";
 
-import AuthForm from "../components/layout/form/auth/Form";
-import EmailField from "../components/layout/form/auth/EmailField";
-import PasswordField from "../components/layout/form/auth/PasswordField";
+import AuthForm from "../components/auth/Form";
+import EmailField from "../components/auth/EmailField";
+import PasswordField from "../components/auth/PasswordField";
 
 type LoginData = {
   email: string;

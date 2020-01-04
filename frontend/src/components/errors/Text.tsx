@@ -6,7 +6,7 @@ type Props = {
   text: string;
 };
 
-const Default: React.FC<Props> = ({ text }) => {
+const ErrorText: React.FC<Props> = ({ text }) => {
   return (
     <Typography variant="body2" color="error">
       {text}
@@ -14,4 +14,4 @@ const Default: React.FC<Props> = ({ text }) => {
   );
 };
 
-export default Default;
+export default ErrorText;

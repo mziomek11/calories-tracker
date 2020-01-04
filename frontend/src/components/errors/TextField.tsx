@@ -9,7 +9,7 @@ export type ErrorProps = {
 
 type Props = ErrorProps & TextFieldProps;
 
-const ErrorableTextField: React.FC<Props> = ({
+const ErrorTextField: React.FC<Props> = ({
   err,
   showHelperText = true,
   ...rest
@@ -23,4 +23,4 @@ const ErrorableTextField: React.FC<Props> = ({
   );
 };
 
-export default ErrorableTextField;
+export default ErrorTextField;

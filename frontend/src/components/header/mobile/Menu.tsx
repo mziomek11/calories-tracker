@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 
-import { TokenContext } from "../../../../context/token";
+import { TokenContext } from "../../../context/token";
 
 import Hidden from "@material-ui/core/Hidden";
 import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";

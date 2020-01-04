@@ -1,11 +1,15 @@
 import React from "react";
 
-import ErrorableTextField from "../../layout/form/textfield/Errorable";
-import DefaultError from "../../errors/Default";
+import ErrorableTextField from "../../errors/TextField";
+import ErrorText from "../../errors/Text";
 import FormDialog, { FormDialogProps } from "../../dialogs/Form";
 import { TableDialogProps } from "../../table/dialog/models";
 
 type Props = TableDialogProps & FormDialogProps;
+
+const inputProps = {
+  step: "any"
+};
 
 const Form: React.FC<Props> = ({
   errors,
@@ -35,6 +39,7 @@ const Form: React.FC<Props> = ({
         type="number"
         margin="dense"
         err={errors.calories}
+        inputProps={inputProps}
       />
       <ErrorableTextField
         name="fat"
@@ -45,6 +50,7 @@ const Form: React.FC<Props> = ({
         type="number"
         margin="dense"
         err={errors.fat}
+        inputProps={inputProps}
       />
       <ErrorableTextField
         name="carbohydrates"
@@ -55,6 +61,7 @@ const Form: React.FC<Props> = ({
         type="number"
         margin="dense"
         err={errors.carbohydrates}
+        inputProps={inputProps}
       />
       <ErrorableTextField
         name="protein"
@@ -65,8 +72,9 @@ const Form: React.FC<Props> = ({
         type="number"
         margin="dense"
         err={errors.protein}
+        inputProps={inputProps}
       />
-      {errors.general && <DefaultError text={errors.general} />}
+      {errors.general && <ErrorText text={errors.general} />}
     </FormDialog>
   );
 };

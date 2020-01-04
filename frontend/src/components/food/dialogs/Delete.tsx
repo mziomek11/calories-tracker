@@ -1,6 +1,6 @@
 import React from "react";
 
-import DefaultError from "../../errors/Default";
+import ErrorText from "../../errors/Text";
 import FormDialog from "../../dialogs/Form";
 import { TableDialogProps } from "../../table/dialog/models";
 
@@ -13,7 +13,7 @@ const Delete: React.FC<TableDialogProps> = props => {
       buttonText="Delete"
       {...props}
     >
-      {props.errors.general && <DefaultError text={props.errors.general} />}
+      {props.errors.general && <ErrorText text={props.errors.general} />}
     </FormDialog>
   );
 };

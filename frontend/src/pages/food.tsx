@@ -1,6 +1,6 @@
 import React from "react";
 
-import MainGrid from "../components/layout/grid/Main";
+import MainGrid from "../components/grid/Main";
 import FoodTable from "../components/food/Table";
 
 const FoodPage = () => {

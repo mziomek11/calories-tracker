@@ -1,7 +1,7 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
 
-import MaterialLink from "@material-ui/core/Link";
+import Link from "@material-ui/core/Link";
 import Dialog from "@material-ui/core/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
@@ -14,7 +14,7 @@ const NoFood = () => {
       <DialogContent>
         <DialogContentText>
           It looks like you haven't added any food yet. You can do this{" "}
-          <Link to="/food" component={MaterialLink}>
+          <Link to="/food" component={RouterLink}>
             here
           </Link>
           .

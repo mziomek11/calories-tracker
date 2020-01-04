@@ -1,15 +1,15 @@
 import React from "react";
 import { Link as RouterLink } from "react-router-dom";
 
-import { ErrorProps } from "../textfield/Errorable";
+import { ErrorProps } from "../errors/TextField";
 
 import Typography from "@material-ui/core/Typography";
 import Link from "@material-ui/core/Link";
 import { makeStyles } from "@material-ui/core/styles";
 
-import AuthGrid from "../../grid/Auth";
-import LoadableButton from "../../../buttons/Loadable";
-import DefaultError from "../../../errors/Default";
+import AuthGrid from "./Grid";
+import LoadableButton from "../buttons/Loadable";
+import ErrorText from "../errors/Text";
 
 export type AuthFieldProps = ErrorProps & {
   value: string;
@@ -62,7 +62,7 @@ const Form: React.FC<Props> = ({
       <Typography variant="h4">{title}</Typography>
       <form className={classes.form} onSubmit={handleSubmit}>
         {children}
-        {generalError && <DefaultError text={generalError} />}
+        {generalError && <ErrorText text={generalError} />}
         <LoadableButton loading={loading}>{buttonText}</LoadableButton>
         <Typography variant="body2">
           {`${redirectText} `}

@@ -1,6 +1,6 @@
 import React from "react";
 
-import ErrorableTextField from "../textfield/Errorable";
+import ErrorableTextField from "../errors/TextField";
 import { AuthFieldProps } from "./Form";
 
 const EmailField: React.FC<AuthFieldProps> = props => {

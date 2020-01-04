@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 
-import { TokenContext } from "../../../../context/token";
+import { TokenContext } from "../../../context/token";
 
 import LogoutIcon from "@material-ui/icons/Person";
 import CalendarIcon from "@material-ui/icons/CalendarToday";

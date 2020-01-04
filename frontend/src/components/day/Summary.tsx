@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import { MealWithFood } from "./Table";
+import { MealWithFood } from "../../pages/day";
 import { toDecimalPlaces } from "../../utils/number";
 
 import MaterialTable from "material-table";

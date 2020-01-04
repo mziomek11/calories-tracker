@@ -9,8 +9,8 @@ import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import { makeStyles } from "@material-ui/core/styles";
 
-import ErrorableTextField from "../../layout/form/textfield/Errorable";
-import DefaultError from "../../errors/Default";
+import ErrorableTextField from "../../errors/TextField";
+import TextError from "../../errors/Text";
 import FormDialog, { FormDialogProps } from "../../dialogs/Form";
 import { TableDialogProps } from "../../table/dialog/models";
 
@@ -62,8 +62,9 @@ const Form: React.FC<Props> = ({
         type="number"
         margin="dense"
         err={errors.weight}
+        inputProps={{ step: "any" }}
       />
-      {errors.general && <DefaultError text={errors.general} />}
+      {errors.general && <TextError text={errors.general} />}
     </FormDialog>
   );
 };
