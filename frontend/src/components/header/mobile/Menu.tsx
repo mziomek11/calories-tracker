@@ -6,21 +6,14 @@ import Hidden from "@material-ui/core/Hidden";
 import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
 import IconButton from "@material-ui/core/IconButton";
 import List from "@material-ui/core/List";
-import { makeStyles } from "@material-ui/core/styles";
+import Box from "@material-ui/core/Box";
 
 import MenuIcon from "@material-ui/icons/Menu";
 
 import ListItemsLoggedIn from "./ListItemsLoggedIn";
 import ListItemsLoggedOut from "./ListItemsLoggedOut";
 
-const useStyles = makeStyles(() => ({
-  list: {
-    width: 250
-  }
-}));
-
 const MobileMenu = () => {
-  const classes = useStyles();
   const { token } = useContext(TokenContext);
   const [open, setOpen] = useState<boolean>(false);
   const openDrawer = () => setOpen(true);
@@ -38,9 +31,9 @@ const MobileMenu = () => {
         onClose={closeDrawer}
         onOpen={openDrawer}
       >
-        <List onClick={closeDrawer} className={classes.list}>
+        <Box component={List} onClick={closeDrawer} width={250}>
           {token ? <ListItemsLoggedIn /> : <ListItemsLoggedOut />}
-        </List>
+        </Box>
       </SwipeableDrawer>
     </Hidden>
   );

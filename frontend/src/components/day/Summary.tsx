@@ -5,23 +5,11 @@ import { toDecimalPlaces } from "../../utils/number";
 
 import MaterialTable from "material-table";
 import Paper from "@material-ui/core/Paper";
-import { makeStyles } from "@material-ui/core";
+import Box from "@material-ui/core/Box";
 
 type Props = {
   meals: MealWithFood[];
 };
-
-const useStyles = makeStyles(theme => ({
-  root: {
-    display: "flex",
-    justifyContent: "center"
-  },
-  paper: {
-    marginTop: theme.spacing(3),
-    marginBottom: theme.spacing(3),
-    maxWidth: "100%"
-  }
-}));
 
 const initialTotal = {
   calories: 0,
@@ -32,7 +20,6 @@ const initialTotal = {
 
 const Summary: React.FC<Props> = ({ meals }) => {
   const [total, setTotal] = useState(initialTotal);
-  const classes = useStyles();
 
   useEffect(() => {
     const newTotal = meals.reduce(
@@ -67,9 +54,9 @@ const Summary: React.FC<Props> = ({ meals }) => {
       components={{
         Toolbar: () => null,
         Container: props => (
-          <div className={classes.root}>
-            <Paper {...props} className={classes.paper} />
-          </div>
+          <Box display="flex" justifyContent="center">
+            <Box component={Paper} my={3} maxWidth="100%" {...props} />
+          </Box>
         )
       }}
       columns={[

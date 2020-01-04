@@ -5,6 +5,7 @@ import { ErrorProps } from "../errors/TextField";
 
 import Typography from "@material-ui/core/Typography";
 import Link from "@material-ui/core/Link";
+import Box from "@material-ui/core/Box";
 import { makeStyles } from "@material-ui/core/styles";
 
 import AuthGrid from "./Grid";
@@ -27,9 +28,6 @@ type Props = {
 };
 
 const useStyles = makeStyles(theme => ({
-  root: {
-    textAlign: "center"
-  },
   form: {
     "& > *": {
       marginTop: theme.spacing(1),
@@ -58,19 +56,21 @@ const Form: React.FC<Props> = ({
   };
 
   return (
-    <AuthGrid className={classes.root}>
-      <Typography variant="h4">{title}</Typography>
-      <form className={classes.form} onSubmit={handleSubmit}>
-        {children}
-        {generalError && <ErrorText text={generalError} />}
-        <LoadableButton loading={loading}>{buttonText}</LoadableButton>
-        <Typography variant="body2">
-          {`${redirectText} `}
-          <Link component={RouterLink} to={redirectPath}>
-            here
-          </Link>
-        </Typography>
-      </form>
+    <AuthGrid>
+      <Box textAlign="center">
+        <Typography variant="h4">{title}</Typography>
+        <form className={classes.form} onSubmit={handleSubmit}>
+          {children}
+          {generalError && <ErrorText text={generalError} />}
+          <LoadableButton loading={loading}>{buttonText}</LoadableButton>
+          <Typography variant="body2">
+            {`${redirectText} `}
+            <Link component={RouterLink} to={redirectPath}>
+              here
+            </Link>
+          </Typography>
+        </form>
+      </Box>
     </AuthGrid>
   );
 };

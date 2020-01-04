@@ -10,6 +10,7 @@ const PasswordField: React.FC<AuthFieldProps> = props => {
       name="password"
       type="password"
       label="Password"
+      margin="dense"
       {...props}
     />
   );

@@ -2,6 +2,7 @@ import React from "react";
 
 import Button, { ButtonProps } from "@material-ui/core/Button";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import Box from "@material-ui/core/Box";
 import { makeStyles } from "@material-ui/core/styles";
 
 type OwnProps = {
@@ -11,9 +12,6 @@ type OwnProps = {
 type Props = ButtonProps & OwnProps;
 
 const useStyles = makeStyles(theme => ({
-  root: {
-    position: "relative"
-  },
   progress: {
     color: theme.palette.primary as any,
     position: "absolute",
@@ -32,7 +30,7 @@ const LoadableButton: React.FC<Props> = ({
   const classes = useStyles();
 
   return (
-    <div className={classes.root}>
+    <Box position="relative">
       <Button
         type="submit"
         variant="contained"
@@ -43,7 +41,7 @@ const LoadableButton: React.FC<Props> = ({
         {children}
       </Button>
       {loading && <CircularProgress size={24} className={classes.progress} />}
-    </div>
+    </Box>
   );
 };
 

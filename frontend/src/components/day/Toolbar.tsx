@@ -4,29 +4,19 @@ import Toolbar, { ToolbarProps } from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
-import { makeStyles } from "@material-ui/core";
+import Box from "@material-ui/core/Box";
 
 import AddBox from "@material-ui/icons/AddBox";
 
 import Caledar from "./calendar/Calendar";
 
-const useStyles = makeStyles(() => ({
-  leftSide: {
-    display: "flex",
-    flexGrow: 1,
-    alignItems: "center"
-  }
-}));
-
 export default (props: ToolbarProps) => {
-  const classes = useStyles();
-
   return (
     <Toolbar>
-      <div className={classes.leftSide}>
+      <Box display="flex" flexGrow={1} alignItems="center">
         <Caledar />
         <Typography variant="h6">{props.title}</Typography>
-      </div>
+      </Box>
 
       <Tooltip title="Add">
         <IconButton

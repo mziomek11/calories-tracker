@@ -10,6 +10,7 @@ const ConfirmPasswordField: React.FC<AuthFieldProps> = props => {
       name="confirmPassword"
       type="password"
       label="Confirm password"
+      margin="dense"
       {...props}
     />
   );
