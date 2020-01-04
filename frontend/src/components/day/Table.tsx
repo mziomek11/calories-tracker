@@ -19,6 +19,7 @@ import DialogTable from "../table/dialog/Table";
 import AddDialog from "./dialogs/Add";
 import UpdateDialog from "./dialogs/Update";
 import DeleteDialog from "./dialogs/Delete";
+import NoFoodDialog from "./dialogs/NoFood";
 import Toolbar from "./Toolbar";
 import Summary from "./Summary";
 
@@ -122,6 +123,7 @@ const DayTable = () => {
 
   return (
     <>
+      {!isLoading && food.length === 0 && <NoFoodDialog />}
       <DialogTable
         AddDialog={AddDialog}
         UpdateDialog={UpdateDialog}
