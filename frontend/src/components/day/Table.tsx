@@ -97,11 +97,11 @@ const DayTable: React.FC<Props> = ({ meals, setMeals, mealsLoading }) => {
       }}
       columns={[
         { title: "Name", field: "food" },
-        { title: "Weight (g)", field: "weight", type: "numeric" },
+        { title: "Weight(g)", field: "weight", type: "numeric" },
         { title: "Calories", field: "calories", type: "numeric" },
-        { title: "Fat (g)", field: "fat", type: "numeric" },
-        { title: "Carbs (g)", field: "carbohydrates", type: "numeric" },
-        { title: "Protein (g)", field: "protein", type: "numeric" }
+        { title: "Fat(g)", field: "fat", type: "numeric" },
+        { title: "Carbs(g)", field: "carbohydrates", type: "numeric" },
+        { title: "Protein(g)", field: "protein", type: "numeric" }
       ]}
       localization={{
         body: {

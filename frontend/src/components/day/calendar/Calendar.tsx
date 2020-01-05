@@ -5,7 +5,7 @@ import { useDayParams } from "../../../hooks";
 import { dateToISO } from "../../../utils/date";
 
 import Opener from "./Opener";
-import Modal from "./Modal";
+import Dialog from "./Dialog";
 
 const Calendar = () => {
   const [isOpen, setOpen] = useState<boolean>(false);
@@ -25,7 +25,7 @@ const Calendar = () => {
   return (
     <div>
       <Opener onOpen={handleOpen} />
-      <Modal isOpen={isOpen} onClose={handleClose} />
+      <Dialog isOpen={isOpen} onClose={handleClose} />
     </div>
   );
 };

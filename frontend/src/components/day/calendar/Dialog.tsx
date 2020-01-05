@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import Modal from "@material-ui/core/Modal";
+import Dialog from "@material-ui/core/Dialog";
 import { DatePicker } from "@material-ui/pickers";
 import { makeStyles } from "@material-ui/core";
 
@@ -17,14 +17,14 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const CalendarModal: React.FC<Props> = ({ isOpen, onClose }) => {
+const CalendarDialog: React.FC<Props> = ({ isOpen, onClose }) => {
   const [date, setDate] = useState<Date>(new Date());
   const classes = useStyles();
 
   const handleClose = () => onClose(date);
 
   return (
-    <Modal className={classes.root} open={isOpen} onClose={handleClose}>
+    <Dialog className={classes.root} open={isOpen} onClose={handleClose}>
       <div>
         <DatePicker
           disableFuture
@@ -34,8 +34,8 @@ const CalendarModal: React.FC<Props> = ({ isOpen, onClose }) => {
           onChange={setDate as any}
         />
       </div>
-    </Modal>
+    </Dialog>
   );
 };
 
-export default CalendarModal;
+export default CalendarDialog;

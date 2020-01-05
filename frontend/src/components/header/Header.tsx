@@ -13,7 +13,7 @@ const Header = () => {
   return (
     <Box component={AppBar} position="static" mb={4}>
       <MainGrid>
-        <Box component={Toolbar} justifyContent="space-between">
+        <Box component={Toolbar} justifyContent="space-between" p={0}>
           <Logo />
           <div>
             <DesktopMenu />

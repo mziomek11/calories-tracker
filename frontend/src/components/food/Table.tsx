@@ -70,7 +70,7 @@ const Table = () => {
       }}
       columns={[
         {
-          title: "Name (100g serving)",
+          title: "Name(100g serving)",
           field: "name",
           defaultSort: "asc",
           customSort: (f1, f2) => f1.name.localeCompare(f2.name)
@@ -82,19 +82,19 @@ const Table = () => {
           searchable: false
         },
         {
-          title: "Fat (g)",
+          title: "Fat(g)",
           field: "fat",
           type: "numeric",
           searchable: false
         },
         {
-          title: "Carbs (g)",
+          title: "Carbs(g)",
           field: "carbohydrates",
           type: "numeric",
           searchable: false
         },
         {
-          title: "Protein",
+          title: "Protein(g)",
           field: "protein",
           type: "numeric",
           searchable: false

@@ -58,7 +58,7 @@ const Form: React.FC<Props> = ({
   return (
     <AuthGrid>
       <Box textAlign="center">
-        <Typography variant="h4">{title}</Typography>
+        <Typography variant="h3">{title}</Typography>
         <form className={classes.form} onSubmit={handleSubmit}>
           {children}
           {generalError && <ErrorText text={generalError} />}

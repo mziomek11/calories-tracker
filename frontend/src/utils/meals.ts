@@ -1,3 +1,4 @@
+import { toDecimalPlaces } from "./number";
 import { ResponseMeal, MealWithFood } from "../pages/day";
 import { Food } from "../context/food";
 
@@ -10,9 +11,12 @@ export function combineMealWithFood(
   return {
     ...resMeal,
     food: targetFood.name,
-    calories: (targetFood.calories * resMeal.weight) / 100,
-    fat: (targetFood.fat * resMeal.weight) / 100,
-    carbohydrates: (targetFood.carbohydrates * resMeal.weight) / 100,
-    protein: (targetFood.protein * resMeal.weight) / 100
+    calories: toDecimalPlaces((targetFood.calories * resMeal.weight) / 100, 1),
+    fat: toDecimalPlaces((targetFood.fat * resMeal.weight) / 100, 1),
+    carbohydrates: toDecimalPlaces(
+      (targetFood.carbohydrates * resMeal.weight) / 100,
+      1
+    ),
+    protein: toDecimalPlaces((targetFood.protein * resMeal.weight) / 100, 1)
   };
 }

@@ -68,9 +68,9 @@ const Summary: React.FC<Props> = ({ meals }) => {
           }
         },
         { title: "Calories", field: "calories", type: "numeric" },
-        { title: "Fat (g)", field: "fat", type: "numeric" },
-        { title: "Carbs (g)", field: "carbohydrates", type: "numeric" },
-        { title: "Protein (g)", field: "protein", type: "numeric" }
+        { title: "Fat(g)", field: "fat", type: "numeric" },
+        { title: "Carbs(g)", field: "carbohydrates", type: "numeric" },
+        { title: "Protein(g)", field: "protein", type: "numeric" }
       ]}
     />
   );
