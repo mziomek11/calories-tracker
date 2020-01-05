@@ -15,7 +15,7 @@ import yogaImage from "../images/yoga.png";
 
 const HomePage = () => {
   return (
-    <MainGrid>
+    <MainGrid component="main">
       <Box mt={2} mb={6} textAlign="center">
         <Typography variant="h3">
           Track your calories with{" "}
@@ -25,7 +25,7 @@ const HomePage = () => {
         </Typography>
       </Box>
 
-      <Box mb={6}>
+      <Box component="section" mb={6}>
         <Grid container spacing={4}>
           <Grid item xs={12} sm={6}>
             <ImageCard
@@ -46,9 +46,11 @@ const HomePage = () => {
         </Grid>
       </Box>
 
-      <Box textAlign="center">
+      <Box component="section" textAlign="center">
         <Box mb={4}>
-          <Typography variant="h3">Start today</Typography>
+          <Typography component="header" variant="h3">
+            Start today
+          </Typography>
         </Box>
         <Button
           variant="outlined"
@@ -62,9 +64,7 @@ const HomePage = () => {
       </Box>
 
       <Box component="footer" textAlign="center" mb={6} mt={8}>
-        <Typography>
-          Created by <Link href="#">Mateusz Ziomek</Link>
-        </Typography>
+        Created by <Link href="#">Mateusz Ziomek</Link>
       </Box>
     </MainGrid>
   );

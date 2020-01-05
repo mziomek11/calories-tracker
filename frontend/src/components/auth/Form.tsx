@@ -56,7 +56,7 @@ const Form: React.FC<Props> = ({
   };
 
   return (
-    <AuthGrid>
+    <AuthGrid component="main">
       <Box textAlign="center">
         <Typography variant="h3">{title}</Typography>
         <form className={classes.form} onSubmit={handleSubmit}>

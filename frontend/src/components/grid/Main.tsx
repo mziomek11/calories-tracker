@@ -1,7 +1,11 @@
-import React from "react";
+import React, { ElementType } from "react";
 
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core";
+
+type Props = {
+  component?: ElementType;
+};
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -15,13 +19,13 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const MainGrid: React.FC = ({ children }) => {
+const MainGrid: React.FC<Props> = ({ children, component = "div" }) => {
   const classes = useStyles();
 
   return (
     <Grid container className={classes.root}>
       <Grid item xs="auto" sm={1} />
-      <Grid item xs={12} sm={10}>
+      <Grid item xs={12} sm={10} component={component}>
         {children}
       </Grid>
       <Grid item xs="auto" sm={1} />

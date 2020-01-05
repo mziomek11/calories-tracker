@@ -51,7 +51,7 @@ const DayPage = () => {
   }, [params.date, token, isLoading, history, setToken, food]);
 
   return (
-    <MainGrid>
+    <MainGrid component="main">
       <DayTable mealsLoading={mealsLoading} meals={meals} setMeals={setMeals} />
       {meals.length > 0 && <DaySummary meals={meals} />}
       {!isLoading && food.length === 0 && <NoFoodDialog />}

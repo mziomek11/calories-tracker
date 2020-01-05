@@ -5,7 +5,7 @@ import FoodTable from "../components/food/Table";
 
 const FoodPage = () => {
   return (
-    <MainGrid>
+    <MainGrid component="main">
       <FoodTable />
     </MainGrid>
   );
