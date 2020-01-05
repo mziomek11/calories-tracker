@@ -22,5 +22,5 @@ Backend:
 ## Status
 Project is _finished_.
 
-##Inspiration
+## Inspiration
 Backend based on [Full Stack React & Firebase Tutorial](https://www.youtube.com/watch?v=m_u6P5k0vP0).
