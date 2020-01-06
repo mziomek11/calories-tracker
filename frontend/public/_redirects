@@ -1,0 +1,6 @@
+/users https://europe-west1-calories-tracker-304e0.cloudfunctions.net/api/users 200
+/day https://europe-west1-calories-tracker-304e0.cloudfunctions.net/api/day 200
+/food https://europe-west1-calories-tracker-304e0.cloudfunctions.net/api/food 200
+
+
+/* /index.html 200
