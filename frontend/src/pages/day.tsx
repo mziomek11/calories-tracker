@@ -31,11 +31,11 @@ const DayPage = () => {
 
   useEffect(() => {
     if (!moment(params.date).isValid()) {
-      history.push("/day");
+      history.push("/api/day");
     } else if (!isLoading) {
       if (food.length === 0) return;
       setMealsLoading(true);
-      authGet(`/meals?day=${params.date}`, token)
+      authGet(`/api/meals?day=${params.date}`, token)
         .then(({ data }) => {
           const mappedMeals = data.meals.map((m: ResponseMeal) =>
             combineMealWithFood(m, food)

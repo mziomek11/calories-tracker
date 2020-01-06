@@ -62,7 +62,7 @@ export const FoodProvider: React.FC = ({ children }) => {
   useEffect(() => {
     if (token) {
       setLoading(true);
-      authGet("/food", token)
+      authGet("/api/food", token)
         .then(res => dispatch({ type: "REPLACE", payload: res.data.food }))
         .catch(err => console.error(err))
         .finally(() => setLoading(false));

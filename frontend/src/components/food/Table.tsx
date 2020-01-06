@@ -19,7 +19,7 @@ const Table = () => {
   const addFood = (newFood: Food) =>
     new Promise(async (resolve, reject) => {
       try {
-        const res = await authPost(`/${collection}`, token, newFood);
+        const res = await authPost(`/api/${collection}`, token, newFood);
         const { user, ...food } = res.data;
         dispatch({ type: "ADD", payload: food });
         resolve();
@@ -31,7 +31,11 @@ const Table = () => {
   const updateFood = (updatedFood: Food) =>
     new Promise(async (resolve, reject) => {
       try {
-        await authPut(`/${collection}/${updatedFood.id}`, token, updatedFood);
+        await authPut(
+          `/api/${collection}/${updatedFood.id}`,
+          token,
+          updatedFood
+        );
         dispatch({ type: "UPDATE", payload: updatedFood });
         resolve();
       } catch (err) {
@@ -42,7 +46,7 @@ const Table = () => {
   const deleteFood = (deletedFood: Food) =>
     new Promise(async (resolve, reject) => {
       try {
-        await authDelete(`/${collection}/${deletedFood.id}`, token);
+        await authDelete(`/api/${collection}/${deletedFood.id}`, token);
         dispatch({ type: "DELETE", payload: deletedFood });
         resolve();
       } catch (err) {

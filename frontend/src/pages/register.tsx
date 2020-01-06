@@ -22,7 +22,7 @@ const initData: RegisterData = {
 const RegisterPage = () => {
   const [fields, errors, loading, handleChange, register] = useAuthForm(
     initData,
-    "/users/create"
+    "/api/users/create"
   );
 
   return (

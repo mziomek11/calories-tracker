@@ -32,7 +32,7 @@ const DayTable: React.FC<Props> = ({ meals, setMeals, mealsLoading }) => {
     new Promise(async (resolve, reject) => {
       try {
         const body = { day: params.date, food, weight };
-        const { data } = await authPost(`/${collection}`, token, body);
+        const { data } = await authPost(`/api/${collection}`, token, body);
         const resMeal: ResponseMeal = {
           id: data.id,
           food: data.food,
@@ -50,7 +50,7 @@ const DayTable: React.FC<Props> = ({ meals, setMeals, mealsLoading }) => {
     new Promise(async (resolve, reject) => {
       try {
         const body = { food, weight, id };
-        await authPut(`/${collection}/${id}`, token, body);
+        await authPut(`/api/${collection}/${id}`, token, body);
         const fullMealData = combineMealWithFood(body, fooCtx.food);
         setMeals(prevMeals => {
           const newMeals = [...prevMeals];
@@ -67,7 +67,7 @@ const DayTable: React.FC<Props> = ({ meals, setMeals, mealsLoading }) => {
   const deleteMeal = ({ id }: MealWithFood) =>
     new Promise(async (resolve, reject) => {
       try {
-        await authDelete(`/${collection}/${id}`, token);
+        await authDelete(`/api/${collection}/${id}`, token);
         setMeals(prevMeals => prevMeals.filter(meal => meal.id !== id));
         resolve();
       } catch (err) {
