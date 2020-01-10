@@ -10,7 +10,7 @@ const { auth } = require("./middleware");
 
 const app = express();
 
-app.use(cors());
+app.use(cors({ origin: "https://calories-tracker.netlify.com/" }));
 
 app.use("/users", userRoutes);
 app.use("/food", auth, foodRoutes);
