@@ -5,7 +5,6 @@ import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-import Link from "@material-ui/core/Link";
 
 import MainGrid from "../components/grid/Main";
 import ImageCard from "../components/card/Image";
@@ -46,7 +45,7 @@ const HomePage = () => {
         </Grid>
       </Box>
 
-      <Box component="section" textAlign="center">
+      <Box component="section" textAlign="center" mb={4}>
         <Box mb={4}>
           <Typography component="header" variant="h3">
             Start today
@@ -61,10 +60,6 @@ const HomePage = () => {
         >
           Create account
         </Button>
-      </Box>
-
-      <Box component="footer" textAlign="center" mb={6} mt={8}>
-        Created by <Link href="#">Mateusz Ziomek</Link>
       </Box>
     </MainGrid>
   );
